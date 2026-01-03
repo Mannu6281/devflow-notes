@@ -11,4 +11,5 @@ frontend/.env
 # build output
 dist
 build
-.txt
+
+DevFlow Notes.txt
