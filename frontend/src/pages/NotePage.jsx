@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 
 
-const api = 'http://localhost:5000'
+const api = 'https://devflow-backend-who0.onrender.com'
 
 
 const NotePage = () => {

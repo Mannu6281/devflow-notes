@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import ReactMarkdown from "react-markdown";
 
 
-const api = 'http://localhost:5000'
+const api = 'https://devflow-backend-who0.onrender.com'
 
 const ProjectDetails = () => {
 
