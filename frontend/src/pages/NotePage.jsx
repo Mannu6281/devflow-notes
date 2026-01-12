@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 
 
-const api = 'https://devflow-backend-who0.onrender.com'
+const api = import.meta.env.VITE_API_URL
 
 
 const NotePage = () => {

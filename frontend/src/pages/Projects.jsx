@@ -4,7 +4,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom' 
 
-const api= 'https://devflow-backend-who0.onrender.com'
+const api = import.meta.env.VITE_API_URL
 
 
 

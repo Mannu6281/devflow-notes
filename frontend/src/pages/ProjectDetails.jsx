@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import ReactMarkdown from "react-markdown";
 
 
-const api = 'https://devflow-backend-who0.onrender.com'
+const api = import.meta.env.VITE_API_URL
 
 const ProjectDetails = () => {
 
