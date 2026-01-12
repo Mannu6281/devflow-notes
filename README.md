@@ -42,29 +42,15 @@ It is designed to support workflows such as hackathons, project documentation, a
 ## Project Structure
 
 devflow-notes/
-
 ├── backend/
-
 │ └── server.js
-
-│
-
 ├── frontend/
-
 │ ├── src/
-
 │ │ ├── pages/
-
 │ │ ├── assets/
-
 │ │ ├── App.jsx
-
 │ │ └── main.jsx
-
 │ └── public/
-
-│
-
 └── README.md
 ---
 
