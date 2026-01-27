@@ -13,6 +13,7 @@ if (!process.env.MONGO_URI || !process.env.GEMINI_API_KEY) {
 
 const app = express();
 app.use(express.json());
+
 app.use(
   cors({
     origin: [
@@ -25,10 +26,12 @@ app.use(
 )
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const PORT = process.env.PORT || 5000;
+
 mongoose.connect(process.env.MONGO_URI)
         .then(()=>{console.log("Connected to MongoDB")
-            app.listen(5000,()=>{
-    console.log("Server is running on port 5000");
+            app.listen(PORT,()=>{
+    console.log(`Server is running on port ${PORT}`);
 })
         })
         .catch((err)=>{console.log(err)})
