@@ -98,6 +98,9 @@ devflow-notes/
 - `GET /api/notes/:projectId`  
   Fetch notes for a project
 
+- `GET /api/notes/:projectId/:noteId`  
+  Fetch a single note
+
 - `POST /api/notes`  
   Add a new note
 
