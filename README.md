@@ -62,12 +62,17 @@ devflow-notes/
 │   └── .env
 │
 ├── frontend/
+│   ├── public/
+│   │
 │   ├── src/
-│   │   ├── pages/
 │   │   ├── assets/
+│   │   ├── pages/
+│   │   │   ├── NotePage.jsx
+│   │   │   ├── ProjectDetails.jsx
+│   │   │   ├── Projects.jsx
 │   │   ├── App.jsx
+│   │   ├── index.css
 │   │   └── main.jsx
-│   └── public/
 │
 └── README.md
 
