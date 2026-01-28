@@ -41,17 +41,36 @@ It is designed to support workflows such as hackathons, project documentation, a
 
 ## Project Structure
 
-``` devflow-notes/ 
+``` 
+devflow-notes/
 ├── backend/
-│ └── server.js
+│   ├── server.js              # App entry point
+│   ├── config/
+│   │   └── Db.js              # MongoDB connection
+│   ├── models/
+│   │   ├── Project.js         # Project schema
+│   │   └── Note.js            # Note schema
+│   ├── controllers/
+│   │   ├── ProjectController.js
+│   │   ├── NoteController.js
+│   │   └── AiController.js
+│   ├── routes/
+│   │   ├── ProjectRoutes.js
+│   │   ├── NoteRoutes.js
+│   │   └── AiRoutes.js
+│   │
+│   └── .env
+│
 ├── frontend/
-│ ├── src/
-│ │ ├── pages/
-│ │ ├── assets/
-│ │ ├── App.jsx
-│ │ └── main.jsx
-│ └── public/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── assets/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── public/
+│
 └── README.md
+
 ```
 --- 
 
