@@ -44,12 +44,12 @@ It is designed to support workflows such as hackathons, project documentation, a
 ``` 
 devflow-notes/
 ├── backend/
-│   ├── server.js              # App entry point
+│   ├── server.js         
 │   ├── config/
-│   │   └── Db.js              # MongoDB connection
+│   │   └── Db.js         
 │   ├── models/
-│   │   ├── Project.js         # Project schema
-│   │   └── Note.js            # Note schema
+│   │   ├── Project.js       
+│   │   └── Note.js         
 │   ├── controllers/
 │   │   ├── ProjectController.js
 │   │   ├── NoteController.js
