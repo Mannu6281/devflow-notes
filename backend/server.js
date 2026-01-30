@@ -9,7 +9,7 @@ import aiRoutes from "./routes/AiRoutes.js";
 import authRoutes from "./routes/AuthRoutes.js";
 dotenv.config();
 
-if (!process.env.MONGO_URI || !process.env.GEMINI_API_KEY) {
+if (!process.env.MONGO_URI || !process.env.GEMINI_API_KEY || !process.env.JWT_SECRET) {
   console.error("Missing environment variables");
   process.exit(1);
 }

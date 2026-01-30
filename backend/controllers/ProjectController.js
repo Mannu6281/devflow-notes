@@ -3,6 +3,7 @@ import Note from "../models/Note.js";
 
 export const createProject = async (req, res) => {
   try {
+    const userId = req.user.userId
     const project = new Project(req.body);
     const saved = await project.save();
     res.status(201).json(saved);
