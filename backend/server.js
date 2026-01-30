@@ -6,7 +6,7 @@ import connectDB from "./config/Db.js";
 import projectRoutes from "./routes/ProjectRoutes.js";
 import noteRoutes from "./routes/NoteRoutes.js";
 import aiRoutes from "./routes/AiRoutes.js";
-
+import authRoutes from "./routes/AuthRoutes.js";
 dotenv.config();
 
 if (!process.env.MONGO_URI || !process.env.GEMINI_API_KEY) {
@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
 app.use("/api/projects", projectRoutes);
 app.use("/api/notes", noteRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
