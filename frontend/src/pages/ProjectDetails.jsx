@@ -1,12 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios'
 import {  useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import ReactMarkdown from "react-markdown";
-
-
-const api = import.meta.env.VITE_API_URL
+import api from '../api/axios.js'
 
 const ProjectDetails = () => {
 
@@ -32,7 +29,7 @@ const ProjectDetails = () => {
    const handleGenerateExplanation= async()=>{
     try{
         setGenerating(true)
-        const res=await axios.post(`${api}/api/ai/generate`,{projectId: projectId})
+        const res=await api.post(`/api/ai/generate`,{projectId: projectId})
         setExplanation(res.data.explanation)
     }catch(error){
         alert("Failed to generate explanation")
@@ -46,7 +43,7 @@ const ProjectDetails = () => {
    const fetchProjectDetails= async()=>{
     try{
         setLoadingDetails(true)
-        const res = await axios.get(`${api}/api/projects/${projectId}`)
+        const res = await api.get(`/api/projects/${projectId}`)
         if(res.data){
             setProject(res.data)
             setProjectTitle(res.data.title)
@@ -69,7 +66,7 @@ const ProjectDetails = () => {
 
    const editProject = async()=>{
     try{
-        const res = await axios.put(`${api}/api/projects/${projectId}`,{title: projectTitle,problem,targetUsers,techStack})
+        const res = await api.put(`/api/projects/${projectId}`,{title: projectTitle,problem,targetUsers,techStack})
         if(res.data){
             setProject(res.data)
             setEditing(false)
@@ -82,7 +79,7 @@ const ProjectDetails = () => {
    const deleteProject = async()=>{
     if(!confirm("Delete this project")) return;
     try{
-        await axios.delete(`${api}/api/projects/${projectId}`)
+        await api.delete(`/api/projects/${projectId}`)
         navigate('/')
     }catch(err){
         alert("Failed to delete project")
@@ -95,7 +92,7 @@ const ProjectDetails = () => {
         return alert("Content is required")
     }
     try{
-        const res= await axios.post(`${api}/api/notes`,{projectId,title,content})
+        const res= await api.post(`/api/notes`,{projectId,title,content})
         setNotes((prev)=>[res.data,...prev])
         setTitle("")
         setContent("")
@@ -108,7 +105,7 @@ const ProjectDetails = () => {
    const fetchNotes=async()=>{
         try{
             setLoadingNotes(true)
-            const res= await axios.get(`${api}/api/notes/${projectId}`)
+            const res= await api.get(`/api/notes/${projectId}`)
             if(res.data){
                 setNotes(res.data)
             }

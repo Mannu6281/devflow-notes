@@ -1,10 +1,9 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom' 
 
-const api = import.meta.env.VITE_API_URL
+import api from '../api/axios.js'
 
 
 
@@ -21,7 +20,7 @@ const Projects = () => {
     const fetchProjects= async ()=>{
         try{
             setLoading(true)
-            const res = await axios.get(`${api}/api/projects`)
+            const res = await api.get(`/api/projects`)
             setProjects(res.data)
             setError("")
         }catch(err){
@@ -42,7 +41,7 @@ const Projects = () => {
         alert("All fields are required");
       
         try{
-            const res = await axios.post(`${api}/api/projects`,{title,problem,targetUsers,techStack})
+            const res = await api.post(`/api/projects`,{title,problem,targetUsers,techStack})
 
             setProjects((prev)=>[res.data,...prev])
 

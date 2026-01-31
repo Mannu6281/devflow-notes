@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
-
+import api from '../api/axios.js'
 
 
 const api = import.meta.env.VITE_API_URL
@@ -25,7 +25,7 @@ const NotePage = () => {
     const fetchNote = async()=>{
     try{
         setLoading(true)
-        const res= await axios.get(`${api}/api/notes/${projectId}/${noteId}`)
+        const res= await api.get(`/api/notes/${projectId}/${noteId}`)
         if(res.data){
             setNote(res.data)
             setTitle(res.data.title||"")
@@ -44,7 +44,7 @@ const NotePage = () => {
 
 const updateNote = async()=>{
     try{
-        const res= await axios.put(`${api}/api/notes/${projectId}/${noteId}`,{title,content})
+        const res= await api.put(`/api/notes/${projectId}/${noteId}`,{title,content})
         if(res.data){
             setNote(res.data)
             setEditing(false)
@@ -55,10 +55,10 @@ const updateNote = async()=>{
     }
 }
 
-const deleteNode = async()=>{
+const deleteNote = async()=>{
     if (!confirm("Delete this note?")) return;
     try{
-        await axios.delete(`${api}/api/notes/${projectId}/${noteId}`)
+        await api.delete(`/api/notes/${projectId}/${noteId}`)
         navigate(`/projects/${projectId}`,{replace: true})
     }catch(err){
         alert("Failed to delete note")
@@ -138,7 +138,7 @@ useEffect(()=>{
                                     Edit Note
                                 </button>
                                 <button 
-                                    onClick={deleteNode}
+                                    onClick={deleteNote}
                                     className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium shadow-md hover:shadow-lg"
                                 >
                                     Delete Note
