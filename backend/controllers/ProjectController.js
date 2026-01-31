@@ -4,9 +4,8 @@ import Note from "../models/Note.js";
 export const createProject = async (req, res) => {
   try {
     const userId = req.user.userId
-    const project = new Project(req.body);
-    const saved = await project.save();
-    res.status(201).json(saved);
+    const project = await Project.create({ ...req.body, userId});
+    res.status(201).json(project);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -14,7 +13,8 @@ export const createProject = async (req, res) => {
 
 export const getProjects = async (req, res) => {
   try {
-    const projects = await Project.find().sort({ createdAt: -1 });
+    const userId = req.user.userId
+    const projects = await Project.find({userId: userId}).sort({ createdAt: -1 });
     res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -23,7 +23,7 @@ export const getProjects = async (req, res) => {
 
 export const getProjectById = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findOne({ _id:req.params.id,userId: req.user.userId});
     if (!project)
       return res.status(404).json({ error: "Project not found" });
 
@@ -35,8 +35,8 @@ export const getProjectById = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   try {
-    const updated = await Project.findByIdAndUpdate(
-      req.params.id,
+    const updated = await Project.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.userId },
       req.body,
       { new: true }
     );
@@ -52,7 +52,8 @@ export const updateProject = async (req, res) => {
 
 export const deleteProject = async (req, res) => {
   try {
-    const project = await Project.findByIdAndDelete(req.params.id);
+    const project = await Project.findOneAndDelete({
+      _id: req.params.id, userId: req.user.userId });
     if (!project)
       return res.status(404).json({ error: "Project not found" });
 
