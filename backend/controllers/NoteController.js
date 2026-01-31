@@ -21,7 +21,7 @@ export const getNoteById = async (req, res) => {
     const note = await Note.findOne({ _id: req.params.noteId, projectId: req.params.projectId });
     if (!note) return res.status(404).json({ error: "Note not found" });
     const project = await Project.findOne({_id: req.params.projectId, userId: req.user.userId});
-    if (!project) return res.status(404).json({ error: "Project not found" });
+    if (!project) return res.status(404).json({ error: "Note not found" });
     res.status(200).json(note);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -30,7 +30,7 @@ export const getNoteById = async (req, res) => {
 
 export const createNote = async (req, res) => {
   try {
-    const project = await Project.findOne({ _id: req.body.projectId, userId: req.user.userId })
+    const project = await Project.findOne({ _id: req.params.projectId, userId: req.user.userId })
     if(!project)
       return res.status(404).json({ error: "Project not found" });
 
