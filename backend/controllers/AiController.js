@@ -9,11 +9,11 @@ export const generateExplanation = async (req, res) => {
     const { projectId } = req.body;
     if (!projectId)
       return res.status(400).json({ error: "Project ID is required" });
-
-    const project = await Project.findById(projectId);
+    
+    const project = await Project.findOne({ _id: projectId,userId: req.user.userId});
     if (!project)
       return res.status(404).json({ error: "Project not found" });
-
+    
     const notes = await Note.find({ projectId }).sort({ createdAt: -1 });
 
     const notesText = notes
