@@ -7,9 +7,10 @@ It is designed to support workflows such as hackathons, project documentation, a
 ---
 
 ## Features
-
+- User Authentication & Authorization (JWT-based)
 - Create, view, update, and delete projects
 - Add and manage notes under individual projects
+- Protected routes to ensure data privacy per user
 - RESTful API architecture for projects and notes
 - AI-powered project explanation generation using Google Gemini
 - Responsive frontend built with React
@@ -31,6 +32,7 @@ It is designed to support workflows such as hackathons, project documentation, a
 - Express.js
 - MongoDB
 - Mongoose
+- JWT Authentication
 - Google Gemini API
 
 ### Deployment
@@ -39,91 +41,137 @@ It is designed to support workflows such as hackathons, project documentation, a
 
 ---
 
+### Authentication System
+
+- JWT-based authentication
+- Secure password hashing
+- Protected API routes using middleware
+- User-specific access to projects and notes
+- Token-based authorization via Authorization: Bearer <token>
+- This ensures each user can only access and modify their own data.
+
+---
+
 ## Project Structure
 
 ``` 
 devflow-notes/
 ├── backend/
-│   ├── server.js         
 │   ├── config/
-│   │   └── Db.js         
-│   ├── models/
-│   │   ├── Project.js       
-│   │   └── Note.js         
-│   ├── controllers/
-│   │   ├── ProjectController.js
-│   │   ├── NoteController.js
-│   │   └── AiController.js
-│   ├── routes/
-│   │   ├── ProjectRoutes.js
-│   │   ├── NoteRoutes.js
-│   │   └── AiRoutes.js
+│   │   └── Db.js
 │   │
-│   └── .env
+│   ├── controllers/
+│   │   ├── AiController.js
+│   │   ├── AuthController.js
+│   │   ├── NoteController.js
+│   │   └── ProjectController.js
+│   │
+│   ├── middleware/
+│   │   └── AuthMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Project.js
+│   │   └── Note.js
+│   │
+│   ├── routes/
+│   │   ├── AiRoutes.js
+│   │   ├── AuthRoutes.js
+│   │   ├── NoteRoutes.js
+│   │   └── ProjectRoutes.js
+│   │
+│   └── server.js
 │
 ├── frontend/
 │   ├── public/
 │   │
 │   ├── src/
+│   │   ├── api/
+│   │   │   └── axios.js
+│   │   │
 │   │   ├── assets/
+│   │   │
 │   │   ├── pages/
-│   │   │   ├── NotePage.jsx
-│   │   │   ├── ProjectDetails.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
 │   │   │   ├── Projects.jsx
+│   │   │   ├── ProjectDetails.jsx
+│   │   │   └── NotePage.jsx
+│   │   │
 │   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
 └── README.md
+
 
 ```
 --- 
 
-## API Endpoints
+## 🔌 API Endpoints
 
-### Projects
+> 🔐 All project, note, and AI routes require authentication  
+> Include header: `Authorization: Bearer <JWT_TOKEN>`
+
+---
+
+### 🔐 Authentication
+
+- `POST /api/auth/register`  
+  Register a new user
+
+- `POST /api/auth/login`  
+  Authenticate user and receive a JWT token
+
+---
+
+### 📁 Projects (Protected)
+
 - `GET /api/projects`  
-  Fetch all projects
+  Fetch all projects belonging to the authenticated user
 
 - `POST /api/projects`  
   Create a new project
 
 - `GET /api/projects/:id`  
-  Fetch a single project
+  Fetch a single project by ID
 
 - `PUT /api/projects/:id`  
-  Update a project
+  Update an existing project
 
 - `DELETE /api/projects/:id`  
   Delete a project and its associated notes
 
 ---
 
-### Notes
+### 📝 Notes (Protected)
+
 - `GET /api/notes/:projectId`  
-  Fetch notes for a project
+  Fetch all notes for a project
 
 - `GET /api/notes/:projectId/:noteId`  
   Fetch a single note
 
-- `POST /api/notes`  
-  Add a new note
+- `POST /api/notes/:projectId`  
+  Add a new note to a project
 
 - `PUT /api/notes/:projectId/:noteId`  
-  Update a note
+  Update an existing note
 
 - `DELETE /api/notes/:projectId/:noteId`  
   Delete a note
 
 ---
 
-### AI Explanation Generation
-- `POST /api/ai/generate`
+### 🤖 AI Explanation Generation (Protected)
 
-Generates a structured, markdown-formatted explanation of a project using:
-- Project details (title, problem, target users, tech stack)
-- Recent development notes
-- Google Gemini generative AI
+- `POST /api/ai/generate`  
+
+Generate a structured, markdown-formatted project explanation using:
+- Project details
+- Development notes
+- Google Gemini Generative AI
 
 The output is formatted for use in hackathon submissions or project presentations.
 
@@ -135,7 +183,7 @@ The output is formatted for use in hackathon submissions or project presentation
 PORT=5000
 
 MONGO_URI=your_mongodb_connection_string
-
+JWT_SECRET=your_jwt_secret
 GEMINI_API_KEY=your_gemini_api_key
 
 
@@ -147,23 +195,24 @@ VITE_API_URL=your_backend_base_url
 
 ## What This Project Demonstrates
 
-- Designing RESTful APIs with Express
-- MongoDB data modeling using Mongoose
-- Handling relational data using document references
-- Integrating third-party AI services into backend workflows
-- Managing CORS and environment-specific configurations
-- Deploying full-stack applications using Render and Vercel
-- Understanding end-to-end request flow between frontend, backend, database, and AI services
+- JWT-based authentication & route protection
+- Secure backend architecture with middleware
+- RESTful API design using Express
+- MongoDB relational modeling with Mongoose
+- AI integration in real backend workflows
+- Environment-based configs & deployment
+- Full end-to-end ownership of a production-style app
 
 ---
 
 ## Future Improvements
 
-- User authentication and authorization
-- Input validation and rate limiting
-- AI prompt customization controls
-- Improved error handling and logging
-- UI/UX enhancements
+- Refresh token implementation
+- Role-based access control (RBAC)
+- Rate limiting & security hardening
+- AI prompt customization
+- Export AI explanations (PDF / Markdown)
+- Better logging & monitoring
 
 ---
 
