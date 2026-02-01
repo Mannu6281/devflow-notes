@@ -2,10 +2,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Project from "../models/Project.js";
 import Note from "../models/Note.js";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 export const generateExplanation = async (req, res) => {
   try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const { projectId } = req.body;
     if (!projectId)
       return res.status(400).json({ error: "Project ID is required" });
@@ -24,11 +23,38 @@ export const generateExplanation = async (req, res) => {
       )
       .join("\n");
 
-    const prompt = `... SAME PROMPT YOU ALREADY HAVE ...`;
+    const prompt = `
+You are an assistant helping a developer understand their project clearly.
+
+PROJECT DETAILS:
+Title: ${project.title}
+Problem: ${project.problem}
+Target Users: ${project.targetUsers}
+Tech Stack: ${project.techStack}
+
+PROJECT NOTES:
+${notesText || "No notes provided."}
+
+TASK:
+Using ONLY the information from the project details and notes above:
+- Write a clear, concise explanation of what this project is about
+- Explain the problem being solved
+- Explain how the solution works at a high level
+- Keep it simple and developer-friendly
+- Do NOT invent features or assumptions not mentioned
+- Do NOT include code unless absolutely necessary
+
+FORMAT:
+- Use markdown
+- Use short sections with headings
+- Keep the explanation easy to read
+
+OUTPUT:
+A well-structured explanation suitable for documentation or revision.
+`;
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(prompt);
-
     let response = result.response.text();
     response = response.replace(/##\s*/g, "\n\n## ");
     response = response.replace(/(##\s+[^\n]+)(\s+)/g, "$1\n\n");
