@@ -128,7 +128,7 @@ const ProjectDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
         <button 
-            onClick={()=>navigate('/project')} 
+            onClick={()=>navigate('/projects')} 
             className="sticky top-4 mb-6 px-4 py-2 bg-white text-slate-700 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-slate-200 hover:bg-slate-50 font-medium flex items-center gap-2">
             ← Back to Projects
         </button>
