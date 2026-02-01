@@ -92,7 +92,7 @@ const ProjectDetails = () => {
         return alert("Content is required")
     }
     try{
-        const res= await api.post(`/api/notes`,{projectId,title,content})
+        const res= await api.post(`/api/notes/${projectId}`,{title,content})
         setNotes((prev)=>[res.data,...prev])
         setTitle("")
         setContent("")

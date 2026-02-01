@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/:projectId",authMiddleware, getNotes);
 router.get("/:projectId/:noteId", authMiddleware, getNoteById);
-router.post("/", authMiddleware, createNote);
+router.post("/:projectId", authMiddleware, createNote);
 router.put("/:projectId/:noteId", authMiddleware, updateNote);
 router.delete("/:projectId/:noteId", authMiddleware, deleteNote);
 export default router;
