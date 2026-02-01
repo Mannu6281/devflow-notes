@@ -69,7 +69,13 @@ const Projects = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
         <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold text-slate-800 tracking-tight mb-4">Welcome, {user.name}</h1>
-            <button onClick={handleLogout}>Logout</button>
+            <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center justify-center bg-white text-slate-800 px-4 py-2 rounded-lg border border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition-colors font-medium shadow-sm"
+            >
+                Logout
+            </button>
             {/* add project */}
             <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-slate-200">
                 <h2 className="text-2xl font-semibold mb-6 text-slate-700">Add New Project</h2>
