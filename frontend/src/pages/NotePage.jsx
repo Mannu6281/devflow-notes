@@ -1,12 +1,8 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useState } from 'react'
 import api from '../api/axios.js'
-
-
-const api = import.meta.env.VITE_API_URL
 
 
 const NotePage = () => {
@@ -14,6 +10,12 @@ const NotePage = () => {
     const { projectId, noteId } = useParams()
 
     const navigate = useNavigate()
+    useEffect(()=>{
+        const token = localStorage.getItem("token")
+        if(!token){
+            navigate('/')
+        }
+    },[])
 
     const [editing,setEditing]=useState(false)
     const [title,setTitle]=useState("")

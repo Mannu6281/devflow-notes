@@ -80,7 +80,7 @@ const ProjectDetails = () => {
     if(!confirm("Delete this project")) return;
     try{
         await api.delete(`/api/projects/${projectId}`)
-        navigate('/')
+        navigate('/projects')
     }catch(err){
         alert("Failed to delete project")
         console.log(err)
@@ -117,6 +117,10 @@ const ProjectDetails = () => {
    }
 
    useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if(!token){
+        navigate('/')
+    }
     fetchProjectDetails()
     fetchNotes()
    },[])

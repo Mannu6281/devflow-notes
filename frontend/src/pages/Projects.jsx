@@ -33,8 +33,14 @@ const Projects = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
+        const token = localStorage.getItem("token")
+        if(!token){
+            navigate('/')
+        }
         fetchProjects()
     },[])
+    
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const handleAddProject = async () => {
         if(!title||!problem||!targetUsers||!techStack) 
@@ -54,13 +60,16 @@ const Projects = () => {
         }
     }
 
+    const handleLogout = ()=>{
+        localStorage.removeItem("token")
+        navigate('/')
+    }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
         <div className="max-w-6xl mx-auto">
-            <h1 className="text-4xl font-bold text-center mb-12 text-slate-800 tracking-tight">DevFlow Notes</h1>
-            <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
-                Streamline your development workflow by organizing project ideas, tracking problems, and managing tech stacks in one centralized location.
-            </p>
+            <h1 className="text-3xl font-bold text-slate-800 tracking-tight mb-4">Welcome, {user.name}</h1>
+            <button onClick={handleLogout}>Logout</button>
             {/* add project */}
             <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-slate-200">
                 <h2 className="text-2xl font-semibold mb-6 text-slate-700">Add New Project</h2>
