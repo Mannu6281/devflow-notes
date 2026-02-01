@@ -34,11 +34,12 @@ export const createNote = async (req, res) => {
     if(!project)
       return res.status(404).json({ error: "Project not found" });
 
-    const note = new Note(req.body);
+    const note = new Note({projectId: req.params.projectId, ...req.body});
     const saved = await note.save();
     res.status(201).json(saved);
   } catch (error) {
     res.status(400).json({ error: error.message });
+    console.log(error);
   }
 };
 
