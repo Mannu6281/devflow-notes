@@ -6,11 +6,19 @@ import api from '../api/axios.js'
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const [emailError, setEmailError] = useState('')
     const navigate = useNavigate()
 
     const handleLogin = async()=>{
         try{
+            if(!isValidEmail(email)){
+                alert("Please enter a valid email")
+                return
+            }
+            if(!password){
+                alert("Please enter a password")
+                return
+            }
              const res = await api.post(`/api/auth/login`,{email,password})
              localStorage.setItem("token",res.data.token)
              localStorage.setItem("user",JSON.stringify(res.data.user))
@@ -20,6 +28,9 @@ const Login = () => {
             alert("Failed to login")
         }
 
+    }
+    const isValidEmail = (email)=>{
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">

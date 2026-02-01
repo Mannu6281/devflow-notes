@@ -8,11 +8,20 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
     const navigate = useNavigate()
 
     const handleRegister = async()=>{
         try{
+            if(!isValidEmail(email)){
+                alert("Please enter a valid email")
+                return
+            }
+            if(!isValidPassword(password)){
+                alert("Password must be at least 8 characters long and contain at least one letter and one number")
+                return
+            }
             if(password!==confirmPassword){
                 alert("Passwords do not match")
                 return
@@ -23,6 +32,36 @@ const Register = () => {
             alert("Failed to register")
         }
     }
+    const isValidEmail = (email)=>{
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    const handleEmailChange = (e)=>{
+        const val=e.target.value;
+        setEmail(val)
+        if(!val){
+            setEmailError("")
+        }
+        else if(!isValidEmail(val)){
+            setEmailError("Invalid email")
+        }else{
+            setEmailError("")
+        }
+    }
+    const isValidPassword = (password) => {
+  return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+};
+const handlePasswordChange = (e) => {
+  const val = e.target.value;
+  setPassword(val);
+  if(!val){
+    setPasswordError("");
+  }
+  else if(!isValidPassword(val)){
+    setPasswordError("Password must be at least 8 characters long and contain at least one letter and one number");
+  }else{
+    setPasswordError("");
+  }
+}
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
         <div className="max-w-md mx-auto">
@@ -40,19 +79,29 @@ const Register = () => {
                     <input
                         type="email"
                         placeholder='Enter your email'
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleEmailChange}
                         value={email}
                         required
                         className="w-full p-4 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                     />
+                    {emailError && (
+                        <p className="text-red-700 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                            {emailError}
+                        </p>
+                    )}
                     <input
                         type="password"
                         placeholder='Enter your password'
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         value={password}
                         required
                         className="w-full p-4 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                     />
+                    {passwordError && (
+                        <p className="text-red-700 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                            {passwordError}
+                        </p>
+                    )}
                     <input
                         type="password"
                         placeholder='Confirm your password'
